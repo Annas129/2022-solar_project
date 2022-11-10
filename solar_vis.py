@@ -1,6 +1,8 @@
 # coding: utf-8
 # license: GPLv3
 
+#from solar_input import *
+
 """Модуль визуализации.
 Нигде, кроме этого модуля, не используются экранные координаты объектов.
 Функции, создающие гaрафические объекты и перемещающие их на экране, принимают физические координаты
@@ -54,7 +56,7 @@ def scale_y(y):
     **y** — y-координата модели.
     """
 
-    return y  # FIXME: not done yet
+    return window_height - int(y*scale_factor)
 
 
 def create_star_image(space, star):
@@ -80,7 +82,10 @@ def create_planet_image(space, planet):
     **space** — холст для рисования.
     **planet** — объект планеты.
     """
-    pass  # FIXME: сделать как у звезды
+    x = scale_x(planet.x)
+    y = scale_y(planet.y)
+    r = planet.R
+    planet.image = space.create_oval([x - r, y - r], [x + r, y + r], fill=planet.color)
 
 
 def update_system_name(space, system_name):
@@ -114,3 +119,4 @@ def update_object_position(space, body):
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
+
