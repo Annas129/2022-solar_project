@@ -19,8 +19,9 @@ def calculate_force(body, space_objects):
         if body == obj:
             continue  # тело не действует гравитационной силой на само себя!
         r = ((body.x - obj.x)**2 + (body.y - obj.y)**2)**0.5
-        body.Fx += ((body.x - obj.x)*body.m*obj.m*gravitational_constant)/r**3
-        body.Fy += ((body.y - obj.y)*body.m*obj.m*gravitational_constant)/r**3
+        print(r)
+        body.Fx = ((-body.x + obj.x)*body.m*obj.m*gravitational_constant)/r**2
+        body.Fy = ((-body.y + obj.y)*body.m*obj.m*gravitational_constant)/r**2
 
 
 def move_space_object(body, dt):
@@ -32,12 +33,13 @@ def move_space_object(body, dt):
     """
 
     ax = body.Fx/body.m
+    body.Vx += ax * dt
     body.x += dt*body.Vx
-    body.Vx += ax*dt
+    print(body.Vx, body.x)
 
     ay = body.Fy / body.m
-    body.y += dt * body.Vy
     body.Vy += ay * dt
+    body.y += dt * body.Vy
 
 
 def recalculate_space_objects_positions(space_objects, dt):

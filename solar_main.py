@@ -52,7 +52,6 @@ def start_execution():
     perform_execution = True
     start_button['text'] = "Pause"
     start_button['command'] = stop_execution
-
     execution()
     print('Started execution...')
 
@@ -113,15 +112,17 @@ def main():
     global start_button
 
     print('Modelling started!')
+
+
     physical_time = 0
 
     root = tkinter.Tk()
     # космическое пространство отображается на холсте типа Canvas
     space = tkinter.Canvas(root, width=window_width, height=window_height, bg="black")
-    space.pack(side=tkinter.TOP)
+    space.pack(side=tkinter.BOTTOM)
     # нижняя панель с кнопками
     frame = tkinter.Frame(root)
-    frame.pack(side=tkinter.BOTTOM)
+    frame.pack(side=tkinter.TOP)
 
     start_button = tkinter.Button(frame, text="Start", command=start_execution, width=6)
     start_button.pack(side=tkinter.LEFT)
@@ -145,8 +146,12 @@ def main():
     time_label = tkinter.Label(frame, textvariable=displayed_time, width=30)
     time_label.pack(side=tkinter.RIGHT)
 
+    start_btn = tkinter.Button(text="Start")
+    start_btn.pack(side=tkinter.LEFT)
+
     root.mainloop()
     print('Modelling finished!')
+
 
 if __name__ == "__main__":
     main()

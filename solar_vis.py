@@ -41,7 +41,7 @@ def scale_x(x):
     **x** — x-координата модели.
     """
 
-    return int(x*scale_factor) + window_width//2
+    return float(x*scale_factor) + window_width//2
 
 
 def scale_y(y):
@@ -56,7 +56,7 @@ def scale_y(y):
     **y** — y-координата модели.
     """
 
-    return window_height - int(y*scale_factor)
+    return window_height//2 - float(y*scale_factor)
 
 
 def create_star_image(space, star):
@@ -67,7 +67,6 @@ def create_star_image(space, star):
     **space** — холст для рисования.
     **star** — объект звезды.
     """
-
     x = scale_x(star.x)
     y = scale_y(star.y)
     r = star.R
@@ -108,6 +107,7 @@ def update_object_position(space, body):
     **space** — холст для рисования.
     **body** — тело, которое нужно переместить.
     """
+
     x = scale_x(body.x)
     y = scale_y(body.y)
     r = body.R
