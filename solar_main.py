@@ -6,6 +6,7 @@ from tkinter.filedialog import *
 from solar_vis import *
 from solar_model import *
 from solar_input import *
+from plot import *
 
 perform_execution = False
 """Флаг цикличности выполнения расчёта"""
@@ -25,6 +26,9 @@ time_step = None
 space_objects = []
 """Список космических объектов."""
 
+out_filename = ""
+"""Имя файла записи"""
+
 
 def execution():
     """Функция исполнения -- выполняется циклически, вызывая обработку всех небесных тел,
@@ -35,6 +39,8 @@ def execution():
     global physical_time
     global displayed_time
     recalculate_space_objects_positions(space_objects, time_step.get())
+    if out_filename != "":
+        write_space_objects_data_to_file(out_filename, space_objects, 'a')
     for body in space_objects:
         update_object_position(space, body)
     physical_time += time_step.get()
@@ -90,14 +96,14 @@ def open_file_dialog():
         else:
             raise AssertionError()
 
-
 def save_file_dialog():
     """Открывает диалоговое окно выбора имени файла и вызывает
     функцию считывания параметров системы небесных тел из данного файла.
     Считанные объекты сохраняются в глобальный список space_objects
     """
+    global out_filename
     out_filename = asksaveasfilename(filetypes=(("Text file", ".txt"),))
-    write_space_objects_data_to_file(out_filename, space_objects)
+    write_space_objects_data_to_file(out_filename, space_objects, 'w')
 
 
 def main():
@@ -113,7 +119,7 @@ def main():
 
     print('Modelling started!')
 
-
+    open("graph.txt", "w")   #создаём файл куда будем записыватьданные для отрисовки графика
     physical_time = 0
 
     root = tkinter.Tk()
@@ -151,6 +157,10 @@ def main():
 
     root.mainloop()
     print('Modelling finished!')
+    if out_filename != "":
+        graph_Vr()
+        graph_rt()
+        graph_Vt()
 
 
 if __name__ == "__main__":
